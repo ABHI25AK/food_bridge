@@ -1,9 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Leaf, Shield, Globe } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 const Landing: React.FC = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   return (
     <div className="flex flex-col items-center">
@@ -23,14 +25,14 @@ const Landing: React.FC = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
           <button 
-            onClick={() => navigate('/kitchen')}
+            onClick={() => navigate(user?.role === 'Kitchen Admin' ? '/kitchen' : '/login')}
             className="flex items-center justify-center px-8 py-4 text-lg font-medium rounded-xl text-white bg-teal-600 hover:bg-teal-700 shadow-lg shadow-teal-200 transition-all"
           >
             I have surplus food
             <ArrowRight className="ml-2" size={20} />
           </button>
           <button 
-            onClick={() => navigate('/ngo')}
+            onClick={() => navigate(user?.role === 'NGO/Receiver' ? '/ngo' : '/login')}
             className="flex items-center justify-center px-8 py-4 text-lg font-medium rounded-xl text-teal-700 bg-teal-50 border border-teal-200 hover:bg-teal-100 transition-all"
           >
             I want to receive food
